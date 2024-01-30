@@ -297,10 +297,10 @@ section.auth-form {
   background: #F8F8F8;
   min-height: calc(100vh - 86px);
 }
-section.auth-form a {
+section.auth-form a, section.auth-form p {
   color: #FE5F1E;
 }
-section.auth-form a:hover {
+section.auth-form a:hover, section.auth-form p:hover {
   color: #b23301;
 }
 

@@ -63,7 +63,7 @@ section.cart{
 section.auth-form{
     background: $secondary;
     min-height: calc(100vh - 86px);
-    a{
+    a,p{
         color: $primary;
         &:hover{
             color: $primary-hover;
@@ -76,3 +76,4 @@ section.auth-form{
     border-radius: 50px!important;
     padding-left: 8px!important;
 }
+

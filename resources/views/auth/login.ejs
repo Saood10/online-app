@@ -1,11 +1,20 @@
 <section class="auth-form flex items-center">
-    <div class=" bg-white container mx-auto w-80 p-5">
-        <form action="" method="post" class="flex flex-col ">
-            <input class="border-2 p-2 mb-4" type="text" name="email" id="" placeholder="Email">
-            <input class="border-2 p-2 mb-4" type="text" name="password" id="" placeholder="Password">
-            <div class="flex items-center justify-between">
-                <button class="btn-primary text-white px-3 py-1 rounded-full">Sign In</button>
-                <a href="/register" class="register-link ml-3 ">Don't have an account?</a>
+    <div class=" bg-white container mx-auto w-[300px] p-4">
+        <p class="text-center font-bold text-3xl mb-3">LOGIN</p>
+        <form action="/login" method="POST" class="flex flex-col ">
+
+            <%- include('../partials/errors') %>
+            <%- include('../partials/success') %>
+
+            <input class="border-2 p-2 mb-4" type="text" name="email" id="" placeholder="Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>">
+
+            <input class="border-2 p-2 mb-4" type="password" name="password" id="" placeholder="Password"
+            value="<%= typeof password != 'undefined' ? password : '' %>">
+
+            <div class="flex flex-col items-center justify-between">
+                <button class="btn-primary text-white w-full px-3 py-1 rounded-full">Login</button>
+                <a href="/register" class=" m-3 ">Don't have an account?</a>
             </div>
         </form>
     </div>

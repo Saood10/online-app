@@ -1,12 +1,23 @@
 <section class="auth-form flex items-center">
-    <div class=" bg-white container mx-auto w-80 p-5 ">
-        <form action="" method="post" class="flex flex-col ">
-            <input class="border-2 p-2 mb-4" type="text" name="name" id="" placeholder="Name">
-            <input class="border-2 p-2 mb-4" type="text" name="email" id="" placeholder="Email">
-            <input class="border-2 p-2 mb-4" type="text" name="password" id="" placeholder="Password">
-            <div class="flex items-center justify-between">
-                <button class="btn-primary text-white px-3 py-1 rounded-full">Register</button>
-                <a href="/login" class="register-link ml-3">Already have account?</a>
+    <div class=" bg-white container mx-auto w-80 p-4 ">
+        <p class="text-center font-bold text-3xl mb-3">REGISTER</p>
+        <form action="/register" method="POST" class="flex flex-col ">
+
+        <%- include('../partials/errors') %>
+        <%- include('../partials/success') %>
+
+            <input class="border-2 p-2 mb-4" type="text" name="name" id="" placeholder="Name" 
+            value="<%= typeof name != 'undefined' ? name : '' %>">
+
+            <input class="border-2 p-2 mb-4" type="text" name="email" id="" placeholder="Email"
+            value="<%= typeof email != 'undefined' ? email : '' %>">
+
+            <input class="border-2 p-2 mb-4" type="password" name="password" id="" placeholder="Password"
+            value="<%= typeof password != 'undefined' ? password : '' %>">
+
+            <div class="flex flex-col items-center justify-between">
+                <button class="btn-primary text-white w-full px-3 py-1 rounded-full">Register</button>
+                <a href="/login" class=" m-3">Already have account?</a>
             </div>
         </form>
     </div>

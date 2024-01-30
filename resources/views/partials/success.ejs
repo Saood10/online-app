@@ -1,0 +1,8 @@
+<%if(messages.success){%>
+    <% for(const i in messages.success) {%>
+        <div class="flex justify-between p-1 alert alert-success alert-dismissible fade show" role="alert">
+            <%= messages.success[i] %>
+            <button type="button" class=" items-center pb-2" data-bs-dismiss="alert" aria-label="Close">&times;</button>
+        </div>
+    <% } %>
+<% } %>
