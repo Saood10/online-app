@@ -1,0 +1,71 @@
+<section class="">
+    <div class="container mx-auto">
+        <h1 class="font-bold text-lg mb-4">All Orders</h1>
+
+        <%if(messages = messages.success || messages.error){%>
+            <div class="msg w-full p-1 alert alert-success alert-dismissible fade show" role="alert">
+                <%=messages%>
+            </div>
+        <% } %>
+
+        <% function renderItems(items) {
+            return Object.values(items).map(item =>{
+                return `
+                    ${item.item.name} -${item.qty} pcs 
+                `
+            }).join('')
+        }%>
+
+        <table class="w-full table-auto">
+            <thead>
+                <tr>
+                    <th class="border p-2">Orders</th>
+                    <th class="border p-2">Customer</th>
+                    <th class="border p-2">Address</th>
+                    <th class="border p-2">Phone</th>
+                    <th class="border p-2">Payment Type</th>
+                    <th class="border p-2">Status</th>
+                    <th class="border p-2">Placed At</th>
+                </tr>
+            </thead>
+                <tbody>
+                    <%if(orders.length){%>
+                    <%orders.forEach(order=>{%>
+                <tr>
+                    <td class=" border p-2">
+                        <p class="order-id"><%=order._id%></p>
+                        <div class="w-40"><%=renderItems(order.items)%></div>
+                    </td>
+                    <td class="border p-2">
+                        <%=order.customerId.name%>
+                    </td>
+                    <td class="border p-2">
+                        <%=order.address%>
+                    </td>
+                    <td class="border p-2">
+                        <%=order.phone%>
+                    </td>
+                    <td class="border p-2">
+                        <%=order.status%>
+                    </td>
+                    <td class="border p-2">
+                        <%=order.paymentType%>
+                    </td>
+                    <td class="border p-2">
+                        <%=moment(order.createdAt).format('hh:mm A')%>
+                    </td>
+                </tr>
+                <%})%>
+
+                <%} else { %>
+
+                <tr>
+                    <td class="p-4">No Orders Found</td>
+                </tr>
+                <% } %>
+
+                </tbody>
+
+        </table>
+    </div>
+</section>

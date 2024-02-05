@@ -16,7 +16,7 @@ function authController(){
         },
 
         async postRegister(req,res){
-            const {name , email , password } = req.body
+            const {name , email , password} = req.body
             try {
                 const user = new User(req.body)
                 await user.save()
@@ -51,7 +51,6 @@ function authController(){
         async postLogin(req,res){
 
             const { email , password } =  req.body
-
                 try{
             
                     const user = await User.findBy(email , password)
@@ -84,7 +83,7 @@ function authController(){
 
                 delete req.session.token
                 res.redirect('login')
-
+                
             }
             catch (error) {
                 console.log(error);

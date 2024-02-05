@@ -7,7 +7,7 @@ function cartController(){
                 return res.render('customers/cart', {cartItems , cartTotal})
             }
             return res.render('customers/cart', {cartItems:undefined })
-             },
+        },
 
         update(req,res){
             if(!req.session.cart){
@@ -18,6 +18,7 @@ function cartController(){
                 }
             }
             let cart = req.session.cart
+
 
             if(!cart.items[req.body._id]){
 

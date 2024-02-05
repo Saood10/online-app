@@ -44,6 +44,11 @@ const userSchema =  mongoose.Schema({
                         },
                     ]
         },
+        role:{
+            type:String,
+            required:true,
+            default:'user'
+        },
     tokens:[{
         token:{
             type:String,
@@ -67,17 +72,6 @@ userSchema.methods.generateAuthToken = async function(){
     return token
 }
 
-userSchema.statics.findByToken = async (token) =>{
-
-    const decoded = jwt.verify(token , process.env.JWT_SEC )
-    let user = await User .findOne({ _id : decoded._id , 'tokens.token' : token})
-    const userObj = user.toObject()  // converting user to object to do foll manupulation
-
-    delete userObj.tokens
-
-    user = userObj
-    return user
-}
 
 userSchema.statics.findBy = async (email , password) =>{
 

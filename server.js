@@ -15,6 +15,7 @@ app.use(express.static('public'))
 
 //use json
 app.use(express.json())
+
 //url parse
 app.use(express.urlencoded({extended:false}))
 

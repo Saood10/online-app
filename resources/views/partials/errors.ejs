@@ -1,8 +1,9 @@
 <%if(messages.error){%>
     <% for (const i in messages.error) {%>
-    <div class="flex justify-between p-1 alert alert-warning alert-dismissible fade show" role="alert">
+    <div class="msg flex justify-between w-full p-1 alert alert-warning alert-dismissible fade show" role="alert">
         <%= messages.error[i]%>
         <button type="button" class=" items-center pb-2" data-bs-dismiss="alert" aria-label="Close">&times;</button>
     </div>
+    
     <% } %>
 <%}%>

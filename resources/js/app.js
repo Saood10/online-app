@@ -32,5 +32,11 @@ addToCart.forEach(btn => {
     })
 });
 
+const msg = document.querySelector(".msg")
 
+if(msg){
+    setTimeout(()=>{
+        msg.remove()
+    },2000)
+}
 

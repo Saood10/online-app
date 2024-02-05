@@ -14,7 +14,7 @@
                     <span class="text-gray text-xs/[3px] mt-2 m-1 uppercase block"><%=i.item.size%></span>
                 </div>
             </div>
-            <span class="flex-1 text-center"><%=i.qty%></span>
+            <span class="flex-1 text-center"><%=i.qty%> Pcs</span>
             <span class="font-bold text-lg">$<%=i.item.price * i.qty%></span>
         </div>
 
@@ -25,14 +25,20 @@
                 <span class="text-lg font-bold">Total Amount:</span>
                 <span class="amount text-2xl font-bold ml-2">$<%= cartTotal %></span>
             </div>
-            <form action="" method="post" class="mt-12 flex flex-col items-end w-80">
-                <input class=" mb-4 border-2 p-2 w-full" type="text" name="Phone no." id="" placeholder="Phone no.">
+            <%if(session.token) { %>
+            <form action="/order" method="POST" class="mt-12 flex flex-col items-end w-80">
+                <%- include('../partials/errors') %>
+                <input name="phone" class=" mb-4 border-2 p-2 w-full" type="text" placeholder="Phone no.">
                 <textarea name="address" rows="3" class="block w-full border-2 p-2 text-gray-900 mb-4" placeholder="Address"></textarea>
                 <div>
                     <button class="btn-primary text-white px-6 py-2 font-bold rounded-full">Order Now</button>
                 </div>
             </form>
-            <!-- <a href="/login" class="btn-primary cursor-pointer inline-block font-bold text-white px-6 py-2 rounded-full">Login to continue</a> -->
+            <%} else {%>
+            <div class="mt-2">
+                <a href="/login" class="btn-primary cursor-pointer inline-block font-bold text-white px-6 py-2 rounded-full">Login to continue</a>
+            </div>
+            <% } %>
         </div>
     </div>
 
