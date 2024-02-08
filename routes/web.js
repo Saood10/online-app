@@ -39,7 +39,7 @@ router.post('/order', auth ,orderController().store)
 router.get('/order',auth, orderController().index)
 
 //handle Admin
-router.get('/admin', adminOrderController().index)
+router.get('/admin',auth, adminOrderController().index)
 
 
 //404 routes

@@ -57,6 +57,10 @@ function authController(){
                     const token = await user.generateAuthToken()
             
                     req.session.token = token
+
+                    if (user.role === 'admin') {
+                        return res.redirect('/admin')
+                    }
                     req.flash('success' , 'loged in successfully')
                     return res.redirect('/')
             

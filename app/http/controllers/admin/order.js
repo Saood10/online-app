@@ -12,10 +12,15 @@ function adminOrderController(){
                     // Explicitly exclude `password`
                     select: '-password',
                 }).exec()
+
+                if(req.xhr){
+                    return res.json(order)
+                }
                 
                 res.status(200).render('admin/order', {orders : order , moment})
             }
             catch(e){
+                console.log(e);
                 res.status(500).send(e)
     
             }
