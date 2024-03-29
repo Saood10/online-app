@@ -1,7 +1,28 @@
-import axios from 'axios'
 import moment from 'moment'
+import axios from 'axios'
+
+
+function render(){
 
 const orderList = document.querySelector(".orders-js")
+
+    let orders = []
+    let markup
+
+    axios.get('/admin' , {
+        headers:{
+            "X-Requested-With":"XMLHttpRequest"
+        }
+    }).then(res =>{
+        orders = res.data
+        markup = generateHtml(orders)
+        orderList.innerHTML = markup
+
+    }).catch(error =>{
+        console.log(error);
+    })
+
+
 
 function renderItems(items) {
     return Object.values(items).map(item =>{
@@ -17,7 +38,7 @@ function generateHtml(orders){
         <tr>
             <td class=" border p-2">
                 <p class="order-id">${order._id}</p>
-                <div class="w-40"><%=%>${renderItems(order.items)}</div>
+                <div class="w-40">${renderItems(order.items)}</div>
             </td>
             <td class="border p-2">
                 ${order.customerId.name}
@@ -59,22 +80,7 @@ function generateHtml(orders){
     }).join('')
 }
 
-function renderAdmin(){
-    let orders = []
-    let markup
 
-    axios.get('/admin' , {
-        headers:{
-            "X-Requested-With":"XMLHttpRequest"
-        }
-    }).then(res =>{
-        orders = res.data
-        markup = generateHtml(orders)
-        orderList.innerHTML = markup
-
-    }).catch(error =>{
-        console.log(error);
-    })
 }
 
-module.exports = renderAdmin
+export default  render

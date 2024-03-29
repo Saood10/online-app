@@ -1,6 +1,52 @@
 /******/ (() => { // webpackBootstrap
 /******/ 	var __webpack_modules__ = ({
 
+/***/ "./resources/js/admin.js":
+/*!*******************************!*\
+  !*** ./resources/js/admin.js ***!
+  \*******************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+
+
+function render() {
+  var orderList = document.querySelector(".orders-js");
+  var orders = [];
+  var markup;
+  axios__WEBPACK_IMPORTED_MODULE_1__["default"].get('/admin', {
+    headers: {
+      "X-Requested-With": "XMLHttpRequest"
+    }
+  }).then(function (res) {
+    orders = res.data;
+    markup = generateHtml(orders);
+    orderList.innerHTML = markup;
+  })["catch"](function (error) {
+    console.log(error);
+  });
+  function renderItems(items) {
+    return Object.values(items).map(function (item) {
+      return "\n            <p> ".concat(item.item.name, " -").concat(item.qty, " pcs </p>\n        ");
+    }).join('');
+  }
+  function generateHtml(orders) {
+    return orders.map(function (order) {
+      return "\n        <tr>\n            <td class=\" border p-2\">\n                <p class=\"order-id\">".concat(order._id, "</p>\n                <div class=\"w-40\">").concat(renderItems(order.items), "</div>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.customerId.name, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.address, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.phone, "\n            </td>\n            <td class=\"border p-2\">\n            <select name=\"cars\" id=\"cars\">\n                <option value=\"order_placed\"\n                ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                Placed</option>\n                <option value=\"confirmed\"\n                ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                Confirmed</option>\n                <option value=\"prepared\"\n                ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                Prepared</option>\n                <option value=\"delevered\"\n                ").concat(order.status === 'delevered' ? 'selected' : '', ">\n                Delevered</option>\n                <option value=\"completed\"\n                ").concat(order.status === 'completed' ? 'selected' : '', ">\n                Completed</option>\n            </select>\n\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.paymentType, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(moment__WEBPACK_IMPORTED_MODULE_0___default()(order.createdAt).format('hh:mm A'), "\n            </td>\n        </tr>\n        ");
+    }).join('');
+  }
+}
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (render);
+
+/***/ }),
+
 /***/ "./resources/js/app.js":
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
@@ -12,8 +58,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! noty */ "./node_modules/noty/lib/noty.js");
 /* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(noty__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _js_admin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/admin */ "./resources/js/admin.js");
 
 
 
@@ -50,33 +95,7 @@ if (msg) {
     msg.remove();
   }, 2000);
 }
-renderAdmin();
-var orderList = document.querySelector(".orders-js");
-function renderItems(items) {
-  return Object.values(items).map(function (item) {
-    return "\n            <p> ".concat(item.item.name, " -").concat(item.qty, " pcs </p>\n        ");
-  }).join('');
-}
-function generateHtml(orders) {
-  return orders.map(function (order) {
-    return "\n        <tr>\n            <td class=\" border p-2\">\n                <p class=\"order-id\">".concat(order._id, "</p>\n                <div class=\"w-40\">").concat(renderItems(order.items), "</div>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.customerId.name, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.address, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.phone, "\n            </td>\n            <td class=\"border p-2\">\n            <select name=\"cars\" id=\"cars\">\n                <option value=\"order_placed\"\n                ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                Placed</option>\n                <option value=\"confirmed\"\n                ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                Confirmed</option>\n                <option value=\"prepared\"\n                ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                Prepared</option>\n                <option value=\"delevered\"\n                ").concat(order.status === 'delevered' ? 'selected' : '', ">\n                Delevered</option>\n                <option value=\"completed\"\n                ").concat(order.status === 'completed' ? 'selected' : '', ">\n                Completed</option>\n            </select>\n\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.paymentType, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(moment__WEBPACK_IMPORTED_MODULE_1___default()(order.createdAt).format('hh:mm A'), "\n            </td>\n        </tr>\n        ");
-  }).join('');
-}
-function renderAdmin() {
-  var orders = [];
-  var markup;
-  axios__WEBPACK_IMPORTED_MODULE_2__["default"].get('/admin', {
-    headers: {
-      "X-Requested-With": "XMLHttpRequest"
-    }
-  }).then(function (res) {
-    orders = res.data;
-    markup = generateHtml(orders);
-    orderList.innerHTML = markup;
-  })["catch"](function (error) {
-    console.log(error);
-  });
-}
+(0,_js_admin__WEBPACK_IMPORTED_MODULE_1__["default"])();
 
 /***/ }),
 
