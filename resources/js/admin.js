@@ -50,7 +50,9 @@ function generateHtml(orders){
                 ${order.phone}
             </td>
             <td class="border p-2">
-            <select name="cars" id="cars">
+            <form action="admin/order/status" method="POST">
+            <input type="hidden" name="orderId" value="${order._id}" >
+            <select name="status" onchange="this.form.submit()">
                 <option value="order_placed"
                 ${order.status === 'order_placed' ? 'selected' : ''}>
                 Placed</option>
@@ -67,7 +69,7 @@ function generateHtml(orders){
                 ${order.status === 'completed' ? 'selected' : ''}>
                 Completed</option>
             </select>
-
+            </form>
             </td>
             <td class="border p-2">
                 ${order.paymentType}

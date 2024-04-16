@@ -39,7 +39,7 @@ function render() {
   }
   function generateHtml(orders) {
     return orders.map(function (order) {
-      return "\n        <tr>\n            <td class=\" border p-2\">\n                <p class=\"order-id\">".concat(order._id, "</p>\n                <div class=\"w-40\">").concat(renderItems(order.items), "</div>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.customerId.name, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.address, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.phone, "\n            </td>\n            <td class=\"border p-2\">\n            <select name=\"cars\" id=\"cars\">\n                <option value=\"order_placed\"\n                ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                Placed</option>\n                <option value=\"confirmed\"\n                ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                Confirmed</option>\n                <option value=\"prepared\"\n                ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                Prepared</option>\n                <option value=\"delevered\"\n                ").concat(order.status === 'delevered' ? 'selected' : '', ">\n                Delevered</option>\n                <option value=\"completed\"\n                ").concat(order.status === 'completed' ? 'selected' : '', ">\n                Completed</option>\n            </select>\n\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.paymentType, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(moment__WEBPACK_IMPORTED_MODULE_0___default()(order.createdAt).format('hh:mm A'), "\n            </td>\n        </tr>\n        ");
+      return "\n        <tr>\n            <td class=\" border p-2\">\n                <p class=\"order-id\">".concat(order._id, "</p>\n                <div class=\"w-40\">").concat(renderItems(order.items), "</div>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.customerId.name, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.address, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.phone, "\n            </td>\n            <td class=\"border p-2\">\n            <form action=\"admin/order/status\" method=\"POST\">\n            <input type=\"hidden\" name=\"orderId\" value=\"").concat(order._id, "\" >\n            <select name=\"status\" onchange=\"this.form.submit()\">\n                <option value=\"order_placed\"\n                ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                Placed</option>\n                <option value=\"confirmed\"\n                ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                Confirmed</option>\n                <option value=\"prepared\"\n                ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                Prepared</option>\n                <option value=\"delevered\"\n                ").concat(order.status === 'delevered' ? 'selected' : '', ">\n                Delevered</option>\n                <option value=\"completed\"\n                ").concat(order.status === 'completed' ? 'selected' : '', ">\n                Completed</option>\n            </select>\n            </form>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.paymentType, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(moment__WEBPACK_IMPORTED_MODULE_0___default()(order.createdAt).format('hh:mm A'), "\n            </td>\n        </tr>\n        ");
     }).join('');
   }
 }
@@ -55,10 +55,13 @@ function render() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/lib/axios.js");
 /* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! noty */ "./node_modules/noty/lib/noty.js");
 /* harmony import */ var noty__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(noty__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _js_admin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/admin */ "./resources/js/admin.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+
 
 
 
@@ -66,7 +69,7 @@ var addToCart = document.querySelectorAll(".add-to-cart");
 var cartCounter = document.querySelector(".cartqty");
 function updateCart(pizza) {
   // send post req to change the cart in db
-  axios__WEBPACK_IMPORTED_MODULE_2__["default"].post('/update-cart', pizza).then(function (res) {
+  axios__WEBPACK_IMPORTED_MODULE_3__["default"].post('/update-cart', pizza).then(function (res) {
     cartCounter.innerText = res.data.totalQty;
     new (noty__WEBPACK_IMPORTED_MODULE_0___default())({
       type: 'success',
@@ -96,6 +99,29 @@ if (msg) {
   }, 2000);
 }
 (0,_js_admin__WEBPACK_IMPORTED_MODULE_1__["default"])();
+var status = document.querySelectorAll('.status_line');
+var hiddenInput = document.querySelector('#hidden');
+var order = hiddenInput ? hiddenInput.value : null;
+order = JSON.parse(order);
+var time = document.createElement('small');
+function updateStatus(order) {
+  var stepCompleted = true;
+  status.forEach(function (status) {
+    var data = status.dataset.status;
+    if (stepCompleted) {
+      status.classList.add('step-completed');
+    }
+    if (data === order.status) {
+      stepCompleted = false;
+      time.innerText = moment__WEBPACK_IMPORTED_MODULE_2___default()(order.updatedAt).format('hh:mm A');
+      status.appendChild(time);
+      if (status.nextElementSibling) {
+        status.nextElementSibling.classList.add('current');
+      }
+    }
+  });
+}
+updateStatus(order);
 
 /***/ }),
 

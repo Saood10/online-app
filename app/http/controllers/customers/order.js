@@ -46,6 +46,15 @@ function orderController(){
                 req.flash('error' , error)
                 res.status(400).render('customers/order')
             }
+        },
+
+        async show(req,res){
+
+            const order = await Order.findById(req.params.id)
+            if(req.session._id.toString() === order.customerId.toString()){
+                return res.render("customers/singleOrder",{order})
+            }
+            return res.redirect('/')
         }
     }
 }
