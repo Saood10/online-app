@@ -39,7 +39,7 @@ function render() {
   }
   function generateHtml(orders) {
     return orders.map(function (order) {
-      return "\n        <tr>\n            <td class=\" border p-2\">\n                <p class=\"order-id\">".concat(order._id, "</p>\n                <div class=\"w-40\">").concat(renderItems(order.items), "</div>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.customerId.name, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.address, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.phone, "\n            </td>\n            <td class=\"border p-2\">\n            <form action=\"admin/order/status\" method=\"POST\">\n            <input type=\"hidden\" name=\"orderId\" value=\"").concat(order._id, "\" >\n            <select name=\"status\" onchange=\"this.form.submit()\">\n                <option value=\"order_placed\"\n                ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                Placed</option>\n                <option value=\"confirmed\"\n                ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                Confirmed</option>\n                <option value=\"prepared\"\n                ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                Prepared</option>\n                <option value=\"delevered\"\n                ").concat(order.status === 'delevered' ? 'selected' : '', ">\n                Delevered</option>\n                <option value=\"completed\"\n                ").concat(order.status === 'completed' ? 'selected' : '', ">\n                Completed</option>\n            </select>\n            </form>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.paymentType, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(moment__WEBPACK_IMPORTED_MODULE_0___default()(order.createdAt).format('hh:mm A'), "\n            </td>\n        </tr>\n        ");
+      return "\n        <tr>\n            <td class=\" border p-2\">\n                <p class=\"order-id\">".concat(order._id, "</p>\n                <div class=\"w-40\">").concat(renderItems(order.items), "</div>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.customerId.name, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.address, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.phone, "\n            </td>\n            <td class=\"border p-2\">\n            <form action=\"admin/order/status\" method=\"POST\">\n            <input type=\"hidden\" name=\"orderId\" value=\"").concat(order._id, "\" >\n            <select name=\"status\" onchange=\"this.form.submit()\">\n                <option value=\"order_placed\"\n                ").concat(order.status === 'order_placed' ? 'selected' : '', ">\n                Placed</option>\n                <option value=\"confirmed\"\n                ").concat(order.status === 'confirmed' ? 'selected' : '', ">\n                Confirmed</option>\n                <option value=\"prepared\"\n                ").concat(order.status === 'prepared' ? 'selected' : '', ">\n                Prepared</option>\n                <option value=\"delivered\"\n                ").concat(order.status === 'delivered' ? 'selected' : '', ">\n                Delivered</option>\n                <option value=\"completed\"\n                ").concat(order.status === 'completed' ? 'selected' : '', ">\n                Completed</option>\n            </select>\n            </form>\n            </td>\n            <td class=\"border p-2\">\n                ").concat(order.paymentType, "\n            </td>\n            <td class=\"border p-2\">\n                ").concat(moment__WEBPACK_IMPORTED_MODULE_0___default()(order.createdAt).format('hh:mm A'), "\n            </td>\n        </tr>\n        ");
     }).join('');
   }
 }
@@ -61,6 +61,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_admin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../js/admin */ "./resources/js/admin.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_2__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function ownKeys(e, r) { var t = Object.keys(e); if (Object.getOwnPropertySymbols) { var o = Object.getOwnPropertySymbols(e); r && (o = o.filter(function (r) { return Object.getOwnPropertyDescriptor(e, r).enumerable; })), t.push.apply(t, o); } return t; }
+function _objectSpread(e) { for (var r = 1; r < arguments.length; r++) { var t = null != arguments[r] ? arguments[r] : {}; r % 2 ? ownKeys(Object(t), !0).forEach(function (r) { _defineProperty(e, r, t[r]); }) : Object.getOwnPropertyDescriptors ? Object.defineProperties(e, Object.getOwnPropertyDescriptors(t)) : ownKeys(Object(t)).forEach(function (r) { Object.defineProperty(e, r, Object.getOwnPropertyDescriptor(t, r)); }); } return e; }
+function _defineProperty(obj, key, value) { key = _toPropertyKey(key); if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+function _toPropertyKey(t) { var i = _toPrimitive(t, "string"); return "symbol" == _typeof(i) ? i : String(i); }
+function _toPrimitive(t, r) { if ("object" != _typeof(t) || !t) return t; var e = t[Symbol.toPrimitive]; if (void 0 !== e) { var i = e.call(t, r || "default"); if ("object" != _typeof(i)) return i; throw new TypeError("@@toPrimitive must return a primitive value."); } return ("string" === r ? String : Number)(t); }
 
 
 
@@ -105,6 +111,10 @@ var order = hiddenInput ? hiddenInput.value : null;
 order = JSON.parse(order);
 var time = document.createElement('small');
 function updateStatus(order) {
+  status.forEach(function (status) {
+    status.classList.remove('step-completed');
+    status.classList.remove('current');
+  });
   var stepCompleted = true;
   status.forEach(function (status) {
     var data = status.dataset.status;
@@ -115,6 +125,7 @@ function updateStatus(order) {
       stepCompleted = false;
       time.innerText = moment__WEBPACK_IMPORTED_MODULE_2___default()(order.updatedAt).format('hh:mm A');
       status.appendChild(time);
+      console.log(status.nextElementSibling);
       if (status.nextElementSibling) {
         status.nextElementSibling.classList.add('current');
       }
@@ -122,6 +133,25 @@ function updateStatus(order) {
   });
 }
 updateStatus(order);
+
+// socket
+
+var socket = io();
+if (order) {
+  socket.emit('join', "order_".concat(order._id));
+}
+socket.on('orderupdated', function (data) {
+  var updatedOrder = _objectSpread({}, order);
+  updatedOrder.updatedAt = moment__WEBPACK_IMPORTED_MODULE_2___default()().format();
+  updatedOrder.status = data.status;
+  updateStatus(updatedOrder);
+  new (noty__WEBPACK_IMPORTED_MODULE_0___default())({
+    type: 'success',
+    text: 'order updated',
+    timeout: 1000,
+    progressBar: false
+  }).show();
+});
 
 /***/ }),
 

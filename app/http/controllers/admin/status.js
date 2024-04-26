@@ -6,7 +6,11 @@ function statusController(){
 
             try {
                 await Order.findByIdAndUpdate( req.body.orderId , {status: req.body.status})
-                return res.redirect("status")
+                
+                // Emit event
+                const eventEmitter = req.app.get('eventEmitter')
+                eventEmitter.emit('orderupdated' , {id: req.body.orderId , status : req.body.status})
+                return res.redirect('/admin')
             } catch (err) {
                 return res.redirect("/admin")
             }

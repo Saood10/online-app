@@ -28,7 +28,7 @@ const orderSchema = mongoose.Schema({
     },
     status:{
         type:String,
-        default : 'order placed'
+        default : 'order_placed'
     }
 },{
     timestamps:true

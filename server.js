@@ -7,6 +7,8 @@ require('./app/config/db/db_connect')
 require('dotenv').config()
 const session = require('./app/config/sessions/session')
 const flash = require('express-flash')
+const Emitter = require('events')
+const { log } = require('console')
 
 const PORT = process.env.PORT || 1000
 
@@ -34,6 +36,9 @@ app.use((req,res,next)=>{
     next()
 })
 
+//socket
+const eventEmitter = new Emitter()
+app.set('eventEmitter' , eventEmitter)
 
 // Set the views directory
 const viewPath = path.join(__dirname, '/resources/views')
@@ -50,6 +55,24 @@ app.use(expressLayouts)
 app.use('/' , require('./routes/web'))
 
 // Start the server
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
     console.log('Running on port ' + PORT)
+})
+
+
+// socket 
+
+const io = require('socket.io')(server)
+
+io.on('connection' , (socket)=>{
+    //Join
+
+    socket.on('join' , (orderId)=>{
+        socket.join(orderId)
+    })
+
+})
+
+eventEmitter.on('orderupdated' , (data)=>{
+    io.to(`order_${data.id}`).emit('orderupdated' , data)
 })

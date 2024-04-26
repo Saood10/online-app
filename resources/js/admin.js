@@ -62,9 +62,9 @@ function generateHtml(orders){
                 <option value="prepared"
                 ${order.status === 'prepared' ? 'selected' : ''}>
                 Prepared</option>
-                <option value="delevered"
-                ${order.status === 'delevered' ? 'selected' : ''}>
-                Delevered</option>
+                <option value="delivered"
+                ${order.status === 'delivered' ? 'selected' : ''}>
+                Delivered</option>
                 <option value="completed"
                 ${order.status === 'completed' ? 'selected' : ''}>
                 Completed</option>

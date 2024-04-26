@@ -52,6 +52,11 @@ order = JSON.parse(order)
 let time = document.createElement('small') 
 
 function updateStatus(order){
+    
+    status.forEach(status=>{
+        status.classList.remove('step-completed')
+        status.classList.remove('current')
+    })
     let stepCompleted = true
     status.forEach(status =>{
         let data = status.dataset.status
@@ -62,14 +67,36 @@ function updateStatus(order){
             stepCompleted = false
             time.innerText = moment(order.updatedAt).format('hh:mm A')
             status.appendChild(time)
+            console.log(status.nextElementSibling)
             if (status.nextElementSibling) {
                 status.nextElementSibling.classList.add('current')
             }
         }
     })
 
-    
-
 }
 
 updateStatus(order)
+
+// socket
+
+let socket = io()
+
+if (order) {
+    socket.emit('join' , (`order_${order._id}`))
+}
+
+socket.on('orderupdated' , (data)=>{
+    const updatedOrder = { ...order } 
+    updatedOrder.updatedAt = moment().format()
+    updatedOrder.status = data.status
+
+    updateStatus(updatedOrder)
+
+    new Noty({
+        type:'success',
+        text:'order updated',
+        timeout : 1000,
+        progressBar:false
+    }).show()
+})
